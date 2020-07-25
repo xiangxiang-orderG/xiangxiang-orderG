@@ -39,7 +39,7 @@ body{
   background-color: #92d9ff;
 }
 .red{
-  background-color: #ffb0b0;
+  background-color: #ffb0b9;
 }
 .btnDiv > button{
   padding: 40px 15px;
@@ -104,7 +104,7 @@ body{
   border-left: 1px #CCC solid;
 }
 #chRed:checked + label{
-  background-color: #ffb0b0
+  background-color: #ffb0b9
 }
 #chBlue:checked + label{
   background-color: #92d9ff
