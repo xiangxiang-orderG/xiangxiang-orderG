@@ -13,6 +13,19 @@ const firebaseConfig = {
 firebase.initializeApp(firebaseConfig);
 // firebase.analytics();
 
+let sounds = '';
+for (let i = 1; i <= 30; i++) {
+  if(i>3){
+    // 只有3以前有語音
+    sounds += '<audio id="s_red' + i + '" src="sound/redSome.m4a"></audio>';
+    sounds += '<audio id="s_blue' + i + '" src="sound/blueSome.m4a"></audio>';
+  }else{
+    sounds += '<audio id="s_red' + i + '" src="sound/red' + i + '.m4a"></audio>';
+    sounds += '<audio id="s_blue' + i + '" src="sound/blue' + i + '.m4a"></audio>';
+  }
+}
+$('body').append(sounds);
+
 /** 宣告 */
 const db = firebase.database(); // DB
 const $card = $('#card'); // 卡片
@@ -28,6 +41,7 @@ db.ref('/').on('value',e => {
   if($card.hasClass('init')){
     // 初始設置顏色
     $card.removeClass('init').addClass(now.color);
+    $('#loading').hide();
   }else if(!$card.hasClass(now.color)){
     // 異色換號
     $card.removeClass(getAnotherColor(now.color)).addClass(now.color);
@@ -52,6 +66,18 @@ function getAnotherColor(nowColor){
   }
   return anotherColor;
 }
+
+/** 靜音 */
+$('#muted').click(function(){
+  const mode = $(this).data('mode');
+  if(mode === undefined || mode == false){
+    $(this).data('mode', true).html('<div>取消</div><div>靜音<div>');
+    $('audio').prop('muted', true);
+  }else{
+    $(this).data('mode', false).html('靜音');
+    $('audio').prop('muted', false);
+  }
+});
 
 /** 再念一次 */
 $('#readOneMore').click(function(){
