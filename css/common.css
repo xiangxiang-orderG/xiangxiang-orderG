@@ -1,0 +1,128 @@
+*{
+  box-sizing: border-box;
+  font-family: 'Microsoft JhengHei', sans-serif;
+}
+html{
+  height: 100%;
+}
+body{
+  height: 100%;
+  padding: 0;
+  margin: 0;
+}
+.f{
+  width: 100%;
+  display: flex;
+}
+.f-v{
+  height: 100%;
+  flex-direction: column;
+}
+.f-a{
+  height: 100%;
+  flex-grow: 1;
+  flex-shrink: 1;
+}
+.f-n{
+  flex-grow: 0;
+  flex-shrink: 0;
+}
+.card{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  font-weight: bold;
+  font-size: 200px;
+}
+.blue{
+  background-color: #92d9ff;
+}
+.red{
+  background-color: #ffb0b0;
+}
+.btnDiv > button{
+  padding: 40px 15px;
+  border: 0;
+  border-radius: 0;
+  background-color: #EEE;
+  font-size: 1.5rem;
+  font-weight: bold;
+  letter-spacing: 1px;
+  line-height: 1;
+}
+.btnDiv > button:active{
+  background-color: #DDD;
+}
+.btnDiv > button:focus{
+  outline: 0;
+}
+#readOneMore,
+#next{
+  width: 100%;
+  flex-grow: 1;
+  flex-shrink: 1;
+}
+.btnDiv > button + button{
+  border-left: 1px #CCC solid;
+}
+.dialogDiv{
+  width: 100%;
+  height: 100%;
+  padding: 30px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1;
+  background-color: rgba(0, 0, 0, 0.5);
+  align-items: center;
+  justify-content: center;
+}
+.dialog{
+  width: 100%;
+  max-width: 300px;
+  padding: 30px;
+  background-color: #FFF;
+  border-radius: 10px;
+}
+.ch-div{
+  align-items: center;
+  justify-content: center;
+}
+.ch-div > input[type="radio"]{
+  display: none;
+}
+.ch-div label{
+  width: 50%;
+  text-align: center;
+  padding: 20px 0;
+  background-color: #EEE;
+  font-weight: bold;
+  font-size: 1.5rem;
+}
+#chBlue+ label{
+  border-left: 1px #CCC solid;
+}
+#chRed:checked + label{
+  background-color: #ffb0b0
+}
+#chBlue:checked + label{
+  background-color: #92d9ff
+}
+#orderChoose{
+  width: 100%;
+  margin: 30px 0;
+  padding: 15px 25px;
+  border-radius: 4px;
+  border-radius: 4px;
+  border: 1px #AAA solid;
+  font-weight: bold;
+  font-size: 1.5rem;
+  text-align: center;
+}
+#orderChoose:focus{
+  outline: 0;
+}
+.dialogDiv .btnDiv button{
+  /* flex: 1; */
+}

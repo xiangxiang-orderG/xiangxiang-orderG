@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="zh-Hant-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link rel="stylesheet" href="css/common.css">
+  <title>Document</title>
+</head>
+<body>
+  <div class="f f-v">
+    <div class="f-a">
+      <div class="dialogDiv f">
+        <div class="dialog">
+          <div class="ch-div f">
+            <input type="radio" name="colorChoose" id="chRed" value="red" checked>
+            <label for="chRed">紅色</label>
+            <input type="radio" name="colorChoose" id="chBlue" value="blue">
+            <label for="chBlue">藍色</label>
+          </div>
+          <select id="orderChoose">
+            <option value="1" selected>1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+            <option value="6">6</option>
+            <option value="7">7</option>
+            <option value="8">8</option>
+            <option value="9">9</option>
+            <option value="10">10</option>
+            <option value="11">11</option>
+            <option value="12">12</option>
+            <option value="13">13</option>
+            <option value="14">14</option>
+            <option value="15">15</option>
+            <option value="16">16</option>
+            <option value="17">17</option>
+            <option value="18">18</option>
+            <option value="19">19</option>
+            <option value="20">20</option>
+            <option value="21">21</option>
+            <option value="22">22</option>
+            <option value="23">23</option>
+            <option value="24">24</option>
+            <option value="25">25</option>
+            <option value="26">26</option>
+            <option value="27">27</option>
+            <option value="28">28</option>
+            <option value="29">29</option>
+            <option value="30">30</option>
+          </select>
+          <div class="btnDiv f">
+            <button type="button" id="goCancel" class="f-a">取消</button>
+            <button type="button" id="goGo" class="f-a">前往</button>
+          </div>
+        </div>
+      </div>
+      <div class="card init red" id="card">8</div>
+    </div>
+    <div class="btnDiv f-n f">
+      <button type="button" id="readOneMore">再念<wbr>一次</button>
+      <button type="button" id="go" class="f-n">前往</button>
+      <button type="button" id="next">下一號</button>
+    </div>
+    <div class="f-n">
+      <audio id="sound"></audio>
+    </div>
+    <!-- <button type="button" id="master" class="f-a">叫號</button>
+    <button type="button" id="show" class="f-a">僅顯示號碼</button> -->
+  </div>
+
+  <script
+  src="https://code.jquery.com/jquery-1.12.4.min.js"
+  integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ="
+  crossorigin="anonymous"></script>
+<script type="text/javascript">
+  color = 'red';
+  order = 8;
+  /** 再念一次 */
+  $('#readOneMore').click(function(){
+    $("#sound").attr('src', color + order + '.m4a');
+    $("#sound")[0].play();
+  });
+
+  /** 開啟前往選擇視窗 */
+  $('#go').click(function(){
+    setDialog(true);
+  });
+
+  /** 取消前往選擇視窗 */
+  $('#goCancel').click(function(){
+    setDialog(false);
+  });
+
+  /** 前往該號 */
+  $('#goGo').click(function(){
+    const goColor = $('[name="colorChoose"]:checked').val();
+    const goOrder = parseInt($('#orderChoose').val(), 10);
+    // updateOrder(goColor, goOrder); // 更新號碼牌
+  });
+
+  /**
+   * 設置dialog
+   * @param {boolean} open - 開啟或關閉
+   */
+  const $dialogDiv = $('.dialogDiv');
+  function setDialog(open){
+    if(open){
+      // 開啟dialog
+      $dialogDiv.show();
+    }else{
+      // 關閉dialog
+      $dialogDiv.hide();
+    }
+  }
+
+  setDialog(false);
+</script>
+  <!-- The core Firebase JS SDK is always required and must be listed first -->
+  <!-- <script src="https://www.gstatic.com/firebasejs/7.17.1/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/7.17.1/firebase-database.js"></script> -->
+
+  <!-- TODO: Add SDKs for Firebase products that you want to use
+       https://firebase.google.com/docs/web/setup#available-libraries -->
+  <!-- <script src="https://www.gstatic.com/firebasejs/7.17.1/firebase-analytics.js"></script> -->
+
+  <!-- <script>
+    // Your web app's Firebase configuration
+    var firebaseConfig = {
+      apiKey: "AIzaSyAT2VGelItKB8ujdHvNAKmAZpUZPqCbebw",
+      authDomain: "orderg-96439.firebaseapp.com",
+      databaseURL: "https://orderg-96439.firebaseio.com",
+      projectId: "orderg-96439",
+      storageBucket: "orderg-96439.appspot.com",
+      messagingSenderId: "387288071956",
+      appId: "1:387288071956:web:b62b97e4bf4a8adec24c01",
+      measurementId: "G-7HT7QZZMXP"
+    };
+    // Initialize Firebase
+    firebase.initializeApp(firebaseConfig);
+    // firebase.analytics();
+
+    /** 定義 */
+    const db = firebase.database(); // DB
+    const $card = $('#card'); // 卡片
+    const $next = $('#next'); // 下一號
+    let order, color; // 目前號碼與顏色
+
+    /** 監聽目前號碼 */
+    db.ref('/').on('value',e => {
+      const now = e.val().now;
+      if($card.hasClass('init')){
+        // 初始設置顏色
+        $card.removeClass('init').addClass(now.color);
+      }else if(!$card.hasClass(now.color)){
+        // 異色換號
+        $card.removeClass(getAnotherColor(now.color)).addClass(now.color);
+      }
+      // 設置號碼
+      color = now.color;
+      order = now.order;
+      $card.text(order);
+    });
+
+    /**
+     * 取得另外一個顏色
+     * @param {string} nowColor - 目前顏色
+     * @returns {string} - 另外一個顏色
+     */
+    function getAnotherColor(nowColor){
+      let anotherColor;
+      if(nowColor=='blue'){
+        anotherColor = 'red';
+      }else if(nowColor=='red'){
+        anotherColor = 'blue';
+      }
+      return anotherColor;
+    }
+
+    /** 下一號點擊事件 */
+    $next.click(function(){
+      let nextColor = color;
+      let nextOrder = order + 1;
+      if(order >= 30){
+        nextColor = getAnotherColor(color);
+        nextOrder = 1;
+      }
+      updateOrder(nextColor, nextOrder); // 更新號碼牌
+    });
+
+    /** 更新號碼牌
+     * @param {string} updateColor - 欲更新之號碼牌顏色
+     * @param {number} updateOrder - 欲更新之號碼牌號碼
+     */
+    function updateOrder(updateColor, updateOrder){
+      db.ref('/').update({
+        now: {
+          color: updateColor,
+          order: updateOrder
+        }
+      });
+    }
+  </script> -->
+</body>
+</html>
